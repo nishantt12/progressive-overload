@@ -1,3 +1,23 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+export async function loadData() {
+    const value = await AsyncStorage.getItem('workout')
+    .then(req => JSON.parse(req));
+    console.log(value);
+
+    if (value != null) {
+        console.log("Values is not  null")
+        return value;
+    }
+    else {
+        console.log("Values is null")
+        console.log(JSON.stringify(DATA))
+        return DATA;
+    }
+}
+
+
 export const DATA = [
     {
         "id": 0,
@@ -18,7 +38,7 @@ export const DATA = [
             "weight": 20,
             "reps": 45
         }
-         
+
         ]
     },
     {
@@ -40,7 +60,7 @@ export const DATA = [
             "weight": 0,
             "reps": 50
         }
-         
+
         ]
     },
     {
@@ -59,7 +79,7 @@ export const DATA = [
             "weight": 0,
             "reps": 15
         }
-         
+
         ]
     }
 
@@ -82,7 +102,7 @@ export const DATA2 = [
             "weight": 20,
             "reps": 45
         }
-         
+
         ]
     },
 

@@ -1,31 +1,59 @@
 import React from 'react';
 
 import { StyleSheet, FlatList, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
-import { set } from 'react-native-reanimated';
-
-import { DATA } from '../utils/data'
-
-const { useState } = React;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
+
+import { loadData } from '../utils/data'
+
+const { useState, useEffect } = React;
+var DATA = []
 
 export default function Home() {
 
     // re-render single component of list and make the flatlist fast
 
-    const [myArray, setMyArray] = useState(DATA)
+    const [myArray, setMyArray] = useState([])
 
-    const plusWight = (set, index, listIndex) => {
-        var newData = DATA;
+    useEffect(() => {
+
+        const getData  = async () =>{
+            console.log("useEffect")
+            const  DATA = await loadData()
+            console.log("DATA");
+            console.log(JSON.stringify(DATA));
+            setMyArray(DATA);
+        }
+        
+        getData()
+
+    }, [])
+
+    const plusWight = async (set, index, listIndex) => {
+        var newData = myArray;
         newData[listIndex].set[index].weight += 2.5;
+        try {
+            await AsyncStorage.setItem('workout', JSON.stringify(newData));
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
 
         setMyArray([...newData]);
     }
 
-    const minusWight = (set, index, listIndex) => {
-        var newData = DATA;
+    const minusWight = async (set, index, listIndex) => {
+        var newData = myArray;
         newData[listIndex].set[index].weight -= 2.5;
+        try {
+            await AsyncStorage.setItem('workout', JSON.stringify(newData));
+        } catch (e) {
+            // saving error
+            console.log(e);
+        }
+
         setMyArray([...newData]);
     }
 
