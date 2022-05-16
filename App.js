@@ -28,6 +28,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './app/views/Home';
+import Diet from './app/views/Diet';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,7 @@ const App: () => Node = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Progressive overload" component={Home} />
+        <Stack.Screen name="Diet" component={Diet} />
       </Stack.Navigator>
     </NavigationContainer>
   );

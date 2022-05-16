@@ -1,43 +1,116 @@
 import React from 'react';
 
-import { StyleSheet, FlatList, View, Text, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, FlatList, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
 import { set } from 'react-native-reanimated';
 
 import { DATA } from '../utils/data'
 
-const SET = ({ set, index }) => {
-    return (
-        // create seprate components for weight and reps with button and use flexbox
-        <Text style={styles.title}>{index + 1}: Weight {set.weight},   Reps: {set.reps}</Text>
-    )
-}
+const { useState } = React;
 
-const renderItem = ({ item }) => {
 
-    return (
-        <View style={styles.item}>
-            <Text style={styles.title}>
-                {item.title}
-            </Text>
-            <Text style={styles.title}>
-                Sets
-            </Text>
-            {item.set.map((set, index) => <SET set={set} index={index} />)}
-        </View>
-    )
-}
 
 
 export default function Home() {
 
-    console.log(JSON.stringify(DATA));
+    // re-render single component of list and make the flatlist fast
+
+    const [myArray, setMyArray] = useState(DATA)
+
+    const plusWight = (set, index, listIndex) => {
+        var newData = DATA;
+        newData[listIndex].set[index].weight += 2.5;
+
+        setMyArray([...newData]);
+    }
+
+    const minusWight = (set, index, listIndex) => {
+        var newData = DATA;
+        newData[listIndex].set[index].weight -= 2.5;
+        setMyArray([...newData]);
+    }
+
+    const SET = ({ set, index, listIndex, key }) => {
+        // const [mySet, setMySet] = useState(set)
+
+        // const plusWight = (index, listIndex) => {
+        //     console.log(mySet+"  ");
+        //     console.log(JSON.stringify(mySet));
+        //     let newSet = mySet
+        //     newSet.weight += 2.5;
+
+        //     setMySet(newSet);
+        // }
+
+        // const minusWight = (set, index, listIndex) => {
+        //     set[index].weight -= 2.5;
+
+        //     setMySet([...set]);
+        // }
+
+        return (
+            // create seprate components for weight and reps with button and use flexbox
+            <View style={styles.set}>
+                <Text style={styles.set_count}>{index + 1}:</Text>
+                <View>
+
+                    <View style={styles.each_set}>
+                        <Text style={styles.set_title}>Weight </Text>
+                        <TouchableOpacity
+                            onPress={() => minusWight(set, index, listIndex)}
+                            style={styles.counter}>
+                            <Text>-</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.weight}>{set.weight}</Text>
+                        <TouchableOpacity
+                            onPress={() => plusWight(set, index, listIndex)}
+                            style={styles.counter}>
+                            <Text>+</Text>
+                        </TouchableOpacity>
+                        <Text style={{ color: 'white', justifyContent: 'center', alignContent: 'center' }}> Kgs</Text>
+                    </View>
+
+                    <View style={styles.each_set}>
+                        <Text style={styles.set_title}>Reps </Text>
+                        <TouchableOpacity
+                            style={styles.counter}>
+                            <Text>-</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.weight}>{set.reps}</Text>
+                        <TouchableOpacity
+                            style={styles.counter}>
+                            <Text>+</Text>
+                        </TouchableOpacity>
+                        <Text style={{ color: 'white', justifyContent: 'center', alignContent: 'center' }}> Reps</Text>
+                    </View>
+
+                </View>
+
+
+
+            </View>
+        )
+    }
+
+    const renderItem = ({ item, index }) => {
+        return (
+            <View style={styles.item}>
+                <Text style={styles.title}>
+                    {item.title}
+                </Text>
+                <Text style={styles.set_title}>
+                    Sets
+                </Text>
+                {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
+            </View>
+        )
+    }
 
     return (
         <View style={styles.container}>
             <FlatList
-                data={DATA}
+                data={myArray}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+
             />
         </View>
 
@@ -52,15 +125,56 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         elevation: 10,
         borderRadius: 5,
+        backgroundColor: '#66ccff'
+    },
+    set_title: {
+        width: 100,
+        fontSize: 16,
 
-        backgroundColor: 'blue'
+        color: 'white',
 
     },
-    title: {
+    counter: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        backgroundColor: 'white',
+    },
+    set: {
+        flexDirection: 'row',
+        margin: 5,
+
+    },
+    each_set: {
+        flexDirection: 'row',
+        margin: 5,
+        alignItems: 'center',
+        alignContent: 'center'
+
+    },
+    weight: {
+        width: 50,
         fontSize: 16,
-        textColor: 'white',
+
         color: 'white',
-        margin: 3
+        margin: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    title: {
+        fontSize: 30,
+
+        color: 'white',
+
+    },
+    set_count: {
+        fontSize: 16,
+
+        color: 'white',
+        margin: 5
     },
     container: {
         backgroundColor: 'white',
