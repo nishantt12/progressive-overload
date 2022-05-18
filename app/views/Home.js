@@ -1,9 +1,12 @@
 import React from 'react';
 
-import { StyleSheet, FlatList, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, FlatList,Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Carousel from 'react-native-snap-carousel';
 
-
+const SLIDER_WIDTH = Dimensions.get('window').width;
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
+const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
 import { loadData, updateWorkout } from '../db/store'
@@ -162,41 +165,15 @@ export default function Home() {
 
     }, [])
 
-
-
-    // const SET = ({ set, index, listIndex, key }) => {
-    //     // const [mySet, setMySet] = useState(set)
-
-    //     // const plusWight = (index, listIndex) => {
-    //     //     console.log(mySet+"  ");
-    //     //     console.log(JSON.stringify(mySet));
-    //     //     let newSet = mySet
-    //     //     newSet.weight += 2.5;
-
-    //     //     setMySet(newSet);
-    //     // }
-
-    //     // const minusWight = (set, index, listIndex) => {
-    //     //     set[index].weight -= 2.5;
-
-    //     //     setMySet([...set]);
-    //     // }
-
-    //     return (
-    //         // create seprate components for weight and reps with button and use flexbox
-
-    //     )
-    // }
-
     const renderItem = ({ item, index }) => {
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>
-                    {item.title}
-                </Text>
-                <Text style={styles.set_title}>
+                 <Text style={styles.title}>
+                    {item.title} : {index+1}
+                </Text> 
+                {/* <Text style={styles.set_title}>
                     Sets
-                </Text>
+                </Text> */}
                 {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
             </View>
         )
@@ -204,11 +181,22 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <Carousel
+              sliderWidth={350}
+              itemWidth={350}
+              itemHeight={500}
+              data={myArray}
+              activeSlideAlignment="center"
+              renderItem={renderItem}
+              contentContainerCustomStyle={{ alignItems: 'center' }}
+             
+            />
+            <Text>Hello</Text>
+            {/* <FlatList
                 data={myArray}
                 renderItem={renderItem}
 
-            />
+            /> */}
         </View>
 
 
@@ -262,7 +250,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     title: {
-        fontSize: 30,
+        fontSize: 25,
 
         color: 'white',
 
@@ -275,6 +263,8 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1
     },
 
