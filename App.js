@@ -29,6 +29,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './app/views/Home';
 import Diet from './app/views/Diet';
+import { Provider } from 'react-redux';
+import store from './app/redux/rootStore';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,13 +43,14 @@ const App: () => Node = () => {
 
   return (
     // <Navigator/>
-
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Progressive overload" component={Home} />
-        <Stack.Screen name="Diet" component={Diet} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Progressive overload" component={Diet} />
+          <Stack.Screen name="Diet" component={Diet} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

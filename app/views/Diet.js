@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { StyleSheet, FlatList, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
 import { set } from 'react-native-reanimated';
@@ -6,39 +6,45 @@ import { set } from 'react-native-reanimated';
 import { DATA, DATA2 } from '../utils/data'
 
 const { useState } = React;
+import { useDispatch } from 'react-redux';
+import { fetchProducts } from '../redux/actions/diet.action';
 
 
 
 
 export default function Diet() {
-    const [count, setCount] = useState(0)
 
-    const plusWight = () => {
-        let newCount = count + 1;
-        setCount(newCount);
-    }
+    const dispatch = useDispatch()
 
-    const minusWight = () => {
-        let newCount = count - 1;
-        setCount(newCount);
-    }
+    const products = useSelector((state) =>
+        state.products
+    );
+
+    // const [count, setCount] = useState(0)
+
+    // const plusWight = () => {
+    //     let newCount = count + 1;
+    //     setCount(newCount);
+    // }
+
+    // const minusWight = () => {
+    //     let newCount = count - 1;
+    //     setCount(newCount);
+    // }
+
+
+    useEffect(() => {
+        dispatch(fetchProducts())
+    }, [])
+
+
+    console.log("products: "+products.length);
 
     return (
 
         <View style={styles.each_set}>
             <Text style={styles.set_title}>Weight </Text>
-            <TouchableOpacity
-                onPress={() => minusWight()}
-                style={styles.counter}>
-                <Text>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.weight}>{count}</Text>
-            <TouchableOpacity
-                onPress={() => plusWight()}
-                style={styles.counter}>
-                <Text>+</Text>
-            </TouchableOpacity>
-            <Text style={{ color: 'white', justifyContent: 'center', alignContent: 'center' }}> Kgs</Text>
+
         </View>
 
 
@@ -59,7 +65,7 @@ const styles = StyleSheet.create({
         width: 100,
         fontSize: 16,
 
-        color: 'white',
+        color: 'black',
 
     },
     counter: {
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
         width: 50,
         fontSize: 16,
 
-        color: 'white',
+        color: 'black',
         margin: 3,
         justifyContent: 'center',
         alignItems: 'center',

@@ -20,6 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+./yarn.lock
+yarn.lock
 
 # Android/IntelliJ
 #

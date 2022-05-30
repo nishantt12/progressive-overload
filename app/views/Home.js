@@ -13,7 +13,7 @@ import { loadData, updateWorkout } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
-
+var _carousel = React.createRef()
 
 
 class SET extends React.Component {
@@ -181,7 +181,10 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
+
+            <Text>{_carousel.currentIndex+1}/{myArray.length}</Text>
             <Carousel
+              ref={(c) => { _carousel = c; }}
               sliderWidth={350}
               itemWidth={350}
               itemHeight={500}
