@@ -5,8 +5,10 @@ import { set } from 'react-native-reanimated';
 
 import { DATA, DATA2 } from '../utils/data'
 
+import {testFetch} from '../test'
+
 const { useState } = React;
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/actions/diet.action';
 
 
@@ -16,8 +18,15 @@ export default function Diet() {
 
     const dispatch = useDispatch()
 
-    const products = useSelector((state) =>
-        state.products
+    const products = useSelector((state) =>{
+        if(state.diets){
+            console.log(state.diets.length);
+
+           return state.diets.length
+        }
+       state
+    }
+       
     );
 
     // const [count, setCount] = useState(0)
@@ -34,16 +43,15 @@ export default function Diet() {
 
 
     useEffect(() => {
+        console.log("useEffect")
+        // testFetch()
         dispatch(fetchProducts())
     }, [])
-
-
-    console.log("products: "+products.length);
 
     return (
 
         <View style={styles.each_set}>
-            <Text style={styles.set_title}>Weight </Text>
+            <Text style={styles.set_title}>Weight  {products}</Text>
 
         </View>
 

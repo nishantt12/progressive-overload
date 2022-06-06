@@ -2,6 +2,7 @@ import { SET_PRODUCTS, FETCH_PRODUCTS } from "./action.types"
 
 
 export const fetchProducts = () =>{
+    console.log("action fetchProducts")
     return {type: FETCH_PRODUCTS}
 }
 
