@@ -46,7 +46,7 @@ const App: () => Node = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Progressive overload" component={Diet} />
+          <Stack.Screen name="Progressive overload" component={Home} />
           <Stack.Screen name="Diet" component={Diet} />
         </Stack.Navigator>
       </NavigationContainer>

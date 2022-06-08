@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, FlatList,Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet, FlatList, Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -17,8 +16,6 @@ var _carousel = React.createRef()
 
 
 class SET extends React.Component {
-
-
     state = {
         set: {}
     }
@@ -61,33 +58,6 @@ class SET extends React.Component {
 
         this.setState({ set: set });
     }
-
-
-    // plusWight = async (set, index, listIndex) => {
-    //     var newData = myArray;
-    //     newData[listIndex].set[index].weight += 2.5;
-    //     try {
-    //         await AsyncStorage.setItem('workout', JSON.stringify(newData));
-    //     } catch (e) {
-    //         // saving error
-    //         console.log(e);
-    //     }
-
-    //     setMyArray([...newData]);
-    // }
-
-    // minusWight = async (set, index, listIndex) => {
-    //     var newData = myArray;
-    //     newData[listIndex].set[index].weight -= 2.5;
-    //     try {
-    //         await AsyncStorage.setItem('workout', JSON.stringify(newData));
-    //     } catch (e) {
-    //         // saving error
-    //         console.log(e);
-    //     }
-
-    //     setMyArray([...newData]);
-    // }
 
 
     render() {
@@ -147,8 +117,6 @@ class SET extends React.Component {
 
 export default function Home() {
 
-    // re-render single component of list and make the flatlist fast
-
     const [myArray, setMyArray] = useState([])
 
     useEffect(() => {
@@ -168,9 +136,9 @@ export default function Home() {
     const renderItem = ({ item, index }) => {
         return (
             <View style={styles.item}>
-                 <Text style={styles.title}>
-                    {item.title} : {index+1}
-                </Text> 
+                <Text style={styles.title}>
+                    {item.title} : {index + 1}
+                </Text>
                 {/* <Text style={styles.set_title}>
                     Sets
                 </Text> */}
@@ -182,17 +150,17 @@ export default function Home() {
     return (
         <View style={styles.container}>
 
-            <Text>{_carousel.currentIndex+1}/{myArray.length}</Text>
+            <Text>{_carousel.currentIndex + 1}/{myArray.length}</Text>
             <Carousel
-              ref={(c) => { _carousel = c; }}
-              sliderWidth={350}
-              itemWidth={350}
-              itemHeight={500}
-              data={myArray}
-              activeSlideAlignment="center"
-              renderItem={renderItem}
-              contentContainerCustomStyle={{ alignItems: 'center' }}
-             
+                ref={(c) => { _carousel = c; }}
+                sliderWidth={350}
+                itemWidth={350}
+                itemHeight={500}
+                data={myArray}
+                activeSlideAlignment="center"
+                renderItem={renderItem}
+                contentContainerCustomStyle={{ alignItems: 'center' }}
+
             />
             <Text>Hello</Text>
             {/* <FlatList
