@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const DEFAULT_WORKOUT = "legs";
+
 export async function updateWorkout(set, index, listIndex) {
     var currentWorkout = await AsyncStorage.getItem('currentWorkout')
     if (currentWorkout == null)
-        currentWorkout =  "back-biceps";
+        currentWorkout =  DEFAULT_WORKOUT;
 
     const DATA = await loadWorkout();
 
@@ -32,6 +34,9 @@ export async function loadWorkout() {
 
     if (value != null) {
         console.log("Values is not  null")
+        if(value[DEFAULT_WORKOUT]==null){
+          value[DEFAULT_WORKOUT] = WORKOUT_PLAN[DEFAULT_WORKOUT]
+        }
         return value;
     }
     else {
@@ -45,7 +50,7 @@ export async function loadWorkout() {
 export async function loadData() {
     var currentWorkout = await AsyncStorage.getItem('currentWorkout')
     if (currentWorkout == null)
-        currentWorkout = "back-biceps";
+        currentWorkout = DEFAULT_WORKOUT;
     const value = await loadWorkout();
     return value[currentWorkout].workouts;
 }
@@ -399,7 +404,164 @@ export const WORKOUT_PLAN = {
           ]
         }
       ]
-    }
+    },
+
+
+
+
+
+     
+  "legs": {
+    "title": "Legs",
+    "index": 0,
+    "workouts": [
+      {
+        "id": 0,
+        key: "0",
+        "title": "Crunches",
+        "set": [
+          {
+            "key": "4",
+            "weight": 0,
+            "reps": 50
+          },
+          {
+            "key": "5",
+            "weight": 0,
+            "reps": 55
+          },
+          {
+            "key": "6",
+            "weight": 0,
+            "reps": 60
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Squats",
+        "set": [
+          {
+            "weight": 75,
+            "reps": 12
+          },
+          {
+            "weight": 85,
+            "reps": 10
+          },
+          {
+            "weight": 95,
+            "reps": 6
+          },
+          {
+            "weight": 105,
+            "reps": 4
+          }
+,
+          {
+            "weight": 115,
+            "reps": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Leg press",
+        "set": [
+          {
+            "weight": 200,
+            "reps": 12
+          },
+          {
+            "weight": 220,
+            "reps": 10
+          },
+          {
+            "weight": 240,
+            "reps": 8
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Sumo squat",
+        "set": [
+          {
+            "weight": 40,
+            "reps": 12
+          },
+          {
+            "weight": 40,
+            "reps": 14
+          },
+          {
+            "weight": 40,
+            "reps": 16
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Leg extension",
+        "set": [
+          {
+            "weight": 55,
+            "reps": 12
+          },
+          {
+            "weight": 60,
+            "reps": 10
+          },
+          {
+            "weight": 65,
+            "reps": 8
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Ham string curls",
+        "set": [
+          {
+            "weight": 55,
+            "reps": 12
+          },
+          {
+            "weight": 60,
+            "reps": 10
+          },
+          {
+            "weight": 65,
+            "reps": 8
+          }
+        ]
+      },
+      {
+        "id": 2,
+        key: "2",
+        "title": "Calf raise",
+        "set": [
+          {
+            "weight": 0,
+            "reps": 30
+          },
+          {
+            "weight": 0,
+            "reps": 32
+          },
+          {
+            "weight": 0,
+            "reps": 35
+          }
+        ]
+      }
+    ]
+  }
   }
 
 
