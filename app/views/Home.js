@@ -2,17 +2,29 @@ import React from 'react';
 
 import { StyleSheet, FlatList, Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, updateWorkout } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
 var _carousel = React.createRef()
+
+const data = [
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' },
+];
 
 
 class SET extends React.Component {
@@ -63,8 +75,6 @@ class SET extends React.Component {
     render() {
 
         const { set, index, listIndex } = this.props;
-
-        console.log("Set: " + set);
 
         return (<View style={styles.set}>
             <Text style={styles.set_count}>{index + 1}:</Text>
@@ -118,20 +128,32 @@ class SET extends React.Component {
 export default function Home() {
 
     const [myArray, setMyArray] = useState([])
+    const [totalWorkout, setTotalWorkout] = useState([])
+
+    const [value, setValue] = useState(null);
+
 
     useEffect(() => {
 
         const getData = async () => {
             console.log("useEffect")
             const DATA = await loadData()
+            const TOTAL_WORKOUT = await getWorkoutMap();
             console.log("DATA");
             console.log(JSON.stringify(DATA));
             setMyArray(DATA);
+            setTotalWorkout(TOTAL_WORKOUT);
         }
 
         getData()
 
     }, [])
+
+    const updateCurrentWorkoutLocal = async (currentWorkout) => {
+        updateCurrentWorkout(currentWorkout);
+        const DATA = await loadData()
+        setMyArray(DATA);
+    }
 
     const renderItem = ({ item, index }) => {
         return (
@@ -140,8 +162,8 @@ export default function Home() {
                     {item.title} : {index + 1}
                 </Text>
                 {/* <Text style={styles.set_title}>
-                    Sets
-                </Text> */}
+                        Sets
+                    </Text> */}
                 {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
             </View>
         )
@@ -149,6 +171,20 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
+            <Dropdown
+                style={styles.dropdown}
+                data={totalWorkout}
+                search
+                maxHeight={300}
+                labelField="value"
+                valueField="key"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={item => {
+                    console.log(item.key)
+                    updateCurrentWorkoutLocal(item.key);
+                }}
+            />
 
             <Text>{_carousel.currentIndex + 1}/{myArray.length}</Text>
             <Carousel
@@ -162,12 +198,11 @@ export default function Home() {
                 contentContainerCustomStyle={{ alignItems: 'center' }}
 
             />
-            <Text>Hello</Text>
             {/* <FlatList
-                data={myArray}
-                renderItem={renderItem}
+                    data={myArray}
+                    renderItem={renderItem}
 
-            /> */}
+                /> */}
         </View>
 
 
@@ -175,6 +210,27 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+    dropdown: {
+        margin: 16,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 12,
+        padding: 12,
+        flex: 1,
+        shadowColor: '#000',
+        marginBottom: 16,
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1.41,
+
+        elevation: 2,
+    },
     item: {
         padding: 10,
         marginVertical: 8,
@@ -238,5 +294,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
+
 
 });
