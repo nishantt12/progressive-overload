@@ -94,7 +94,155 @@ export async function loadData(key) {
   return value[currentWorkout].workouts;
 }
 
+const EXERCIESES = {
+  "biceps": [
+    "Plank",
+    "Biceps Dumble curls",
+    "Barbell Bicep Curl",
+    "Dumbbell Bicep Curl",
+    "Preacher Curl",
+    "Hammer Curl",
+    "Concentration Curl",
+    "Cable Bicep Curl",
+    "Incline Dumbbell Curl",
+    "Reverse Curl",
+    "Zottman Curl",
+    "21s",
+    "Spider Curl",
+    "Drag Curl",
+    "Single Arm Cable Curl",
+    "EZ Bar Curl",
+    "Cross Body Hammer Curl"
+  ],
 
+  "triceps": [
+    "Tricep Dips",
+    "Tricep Pushdown",
+    "Close Grip Bench Press",
+    "Skull Crushers",
+    "Overhead Tricep Extension",
+    "Tricep Kickbacks",
+    "Diamond Push-Ups",
+    "Rope Tricep Pushdown",
+    "Bench Dips",
+    "Tricep Rope Overhead Extension",
+    "Seated Tricep Press",
+    "One-Arm Dumbbell Tricep Extension",
+    "Tricep T-Bar Pushdown",
+    "Reverse Grip Tricep Pushdown",
+    "Bodyweight Tricep Extension"
+  ],
+
+  "chest": [
+    "Bench Press",
+    "Push-Ups",
+    "Dumbbell Flyes",
+    "Incline Bench Press",
+    "Chest Dips",
+    "Decline Bench Press",
+    "Chest Press Machine",
+    "Pec Deck Machine",
+    "Dumbbell Pullover",
+    "Cable Crossover",
+    "Incline Dumbbell Press",
+    "Machine Chest Press",
+    "Wide Grip Push-Ups",
+    "Dumbbell Squeeze Press",
+    "Landmine Press"
+  ],
+
+  "back": [
+    "Deadlifts",
+    "Bent Over Rows",
+    "Pull-Ups",
+    "Lat Pulldowns",
+    "T-Bar Rows",
+    "Single-Arm Dumbbell Rows",
+    "Seated Cable Rows",
+    "Face Pulls",
+    "Hyperextensions",
+    "Chin-Ups",
+    "Close Grip Pulldowns",
+    "Wide Grip Rows",
+    "Pendlay Rows",
+    "Inverted Rows",
+    "Lat Pushdowns"
+  ],
+
+  "shoulder": [
+    "Overhead Press (Military Press)",
+    "Lateral Raises",
+    "Front Raises",
+    "Shrugs",
+    "Face Pulls",
+    "Arnold Press",
+    "Upright Rows",
+    "Reverse Flyes",
+    "Lateral Dumbbell Raises",
+    "Shoulder Press Machine",
+    "Lying Lateral Raises",
+    "Barbell Shrugs",
+    "High Pulls",
+    "Rotator Cuff Exercises",
+    "Dumbbell Shoulder Scaption"
+  ],
+
+  "legs": [
+    "Squats",
+    "Lunges",
+    "Leg Press",
+    "Deadlifts",
+    "Leg Curls",
+    "Calf Raises",
+    "Step-Ups",
+    "Hack Squats",
+    "Box Jumps",
+    "Sumo Deadlifts",
+    "Romanian Deadlifts",
+    "Leg Extensions",
+    "Walking Lunges",
+    "Hamstring Curls",
+    "Bulgarian Split Squats"
+  ],
+
+  "abs": [
+    "Crunches",
+    "Leg Raises",
+    "Planks",
+    "Russian Twists",
+    "Bicycle Crunches",
+    "Mountain Climbers",
+    "Flutter Kicks",
+    "Hanging Leg Raises",
+    "Woodchoppers",
+    "Reverse Crunches",
+    "Side Planks",
+    "Ab Rollouts",
+    "V-Ups",
+    "Oblique Crunches",
+    "Seated Russian Twists"
+  ],
+
+  "forearms": [
+    "Wrist Curls",
+    "Reverse Wrist Curls",
+    "Farmers Walk",
+    "Plate Pinch",
+    "Hammer Curls",
+    "Reverse Grip Barbell Curl",
+    "Behind-the-Back Wrist Curl",
+    "Zottman Curl",
+    "Grip Strengthener Exercises",
+    "Dumbbell Wrist Twist",
+    "Towel Grip Hang",
+    "Thick Bar Training",
+    "Finger Extensions with Rubber Band",
+    "Wrist Roller",
+    "Hand Gripper Exercises"
+  ]
+
+
+}
 
 export const WORKOUT_PLAN = {
   "biceps-triceps": {
@@ -860,7 +1008,7 @@ export const WORKOUT_PLAN = {
 
 
 
-  
+
 
   "push-ups": {
     "title": "Push Ups",
@@ -1190,7 +1338,7 @@ export const DATA2 = [
     "id": 0,
     "title": "Plank",
     "isActive": true,
-        "set": [{
+    "set": [{
       "weight": 10,
       "reps": 100
     },
