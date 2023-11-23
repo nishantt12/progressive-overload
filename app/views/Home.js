@@ -114,7 +114,7 @@ class SET extends React.Component {
 
 }
 
-export default function Home() {
+export default function Home({navigation}) {
 
     const [myArray, setMyArray] = useState([])
     const [totalWorkout, setTotalWorkout] = useState([])
@@ -189,11 +189,13 @@ export default function Home() {
                 contentContainerCustomStyle={{ alignItems: 'center' }}
 
             />
-            {/* <FlatList
-                    data={myArray}
-                    renderItem={renderItem}
-
-                /> */}
+            <Button
+                style={styles.saveButton}
+                onPress={() => navigation.push("AddWorkout")}
+                title="Add Workout"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+            />
         </View>
 
 
@@ -203,14 +205,13 @@ export default function Home() {
 const styles = StyleSheet.create({
     dropdown: {
         margin: 16,
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 50,
+        height: 10,
         backgroundColor: 'white',
         borderRadius: 12,
-        padding: 12,
-        flex: 1,
+        padding: 20,
+
         shadowColor: '#000',
         marginBottom: 16,
         shadowOffset: {
@@ -222,6 +223,13 @@ const styles = StyleSheet.create({
 
         elevation: 2,
     },
+    saveButton: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
+      },
     item: {
         padding: 10,
         marginVertical: 8,

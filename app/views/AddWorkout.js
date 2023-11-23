@@ -9,7 +9,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3 } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -142,19 +142,23 @@ export default function Home() {
         setMyArray(DATA);
     }
 
-    const renderItem = ({ item, index }) => {
+    const onSavePressed = () => {
+        console.log("onSavePressed")
+    }
+
+
+    const renderItem = () => {
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>
-                    {item.title} : {index + 1}
-                </Text>
-                {/* <Text style={styles.set_title}>
-                        Sets
-                    </Text> */}
-                {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
+                {SET_3.map((set, setIndex) => 
+
+                <SET set={set} index={setIndex} listIndex={0} />)
+                }
             </View>
         )
     }
+
+
 
     return (
         <View style={styles.container}>
@@ -170,27 +174,35 @@ export default function Home() {
                 value={value}
                 onChange={item => {
                     console.log(item.key)
-                    updateCurrentWorkoutLocal(item.key);
+
                 }}
             />
 
-            <Text>{_carousel.currentIndex + 1}/{myArray.length}</Text>
-            <Carousel
-                ref={(c) => { _carousel = c; }}
-                sliderWidth={350}
-                itemWidth={350}
-                itemHeight={500}
-                data={myArray}
-                activeSlideAlignment="center"
-                renderItem={renderItem}
-                contentContainerCustomStyle={{ alignItems: 'center' }}
+            <Dropdown
+                style={styles.dropdown}
+                data={totalWorkout}
+                search
+                maxHeight={300}
+                labelField="value"
+                valueField="key"
+                placeholder="Select Workout"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={item => {
+                    console.log(item.key)
 
+                }}
             />
-            {/* <FlatList
-                    data={myArray}
-                    renderItem={renderItem}
 
-                /> */}
+            {renderItem()}
+
+            <Button
+                style={styles.saveButton}
+                onPress={onSavePressed}
+                title="Save"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+            />
         </View>
 
 
@@ -200,14 +212,12 @@ export default function Home() {
 const styles = StyleSheet.create({
     dropdown: {
         margin: 16,
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         height: 50,
         backgroundColor: 'white',
         borderRadius: 12,
         padding: 12,
-        flex: 1,
         shadowColor: '#000',
         marginBottom: 16,
         shadowOffset: {
@@ -218,6 +228,14 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
 
         elevation: 2,
+    },
+
+    saveButton: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
     },
     item: {
         padding: 10,
