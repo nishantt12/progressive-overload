@@ -9,7 +9,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3 } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3, getExceriseMap } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -114,10 +114,11 @@ class SET extends React.Component {
 
 }
 
-export default function Home() {
+export default function AddWorkout() {
 
     const [myArray, setMyArray] = useState([])
     const [totalWorkout, setTotalWorkout] = useState([])
+    const [totalExercise, setTotalExercise] = useState([])
 
     const [value, setValue] = useState(null);
 
@@ -125,10 +126,10 @@ export default function Home() {
     useEffect(() => {
 
         const getData = async () => {
-            const DATA = await loadData();
             const TOTAL_WORKOUT = await getWorkoutMap();
-            setMyArray(DATA);
+            const TOTAL_EXERCISE = await getExceriseMap();
             setTotalWorkout(TOTAL_WORKOUT);
+            setTotalExercise(TOTAL_EXERCISE);
         }
 
         getData()
@@ -180,12 +181,12 @@ export default function Home() {
 
             <Dropdown
                 style={styles.dropdown}
-                data={totalWorkout}
+                data={totalExercise}
                 search
                 maxHeight={300}
                 labelField="value"
                 valueField="key"
-                placeholder="Select Workout"
+                placeholder="Select Exercises"
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={item => {

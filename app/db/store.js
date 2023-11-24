@@ -50,21 +50,36 @@ export async function getWorkoutMap() {
     }
     makeItems.push(makeItem)
   })
-
-  // const newItems = Object.keys(totalWorkout).map(v => ({ [v]: { ...totalWorkout[v] } }));
-  // console.log("newItems");
-  // let makeItems = []
-  // newItems.forEach((newItem) => {
-  //   console.log(newItem)
-  //   // makeItems.push({ "key": newItem.key, "value": newItem.value.title })
-  // });
-  // for(item of newItems){
-  //     console.log(item)
-  //     // makeItems.push({"key":item.key, "value": item.value.title})
-  // }
   console.log(makeItems)
   return makeItems;
 }
+
+export async function getExceriseMap() {
+  let totalWorkout = EXERCIESES
+  const filenames = Object.keys(totalWorkout);
+  let makeItems = []
+  filenames.forEach((item) => {
+    let workout = totalWorkout[item]
+    const filenamesInner = Object.keys(workout);
+    filenamesInner.forEach((innerItem) => {
+      let exercise = workout[innerItem]
+      const makeItem = {
+        "key": {
+          "item": item,
+          "innerItem": innerItem
+        },
+        "value": exercise.title
+      }
+      makeItems.push(makeItem)
+    })
+  })
+
+  let test = makeItems[0].key.item
+  let test2 = makeItems[0].key.innerItem
+  console.log(EXERCIESES[test][test2]);
+  return makeItems;
+}
+
 
 export async function loadWorkout() {
 
@@ -1102,7 +1117,7 @@ export const WORKOUT_PLAN_NEW = {
       EXERCIESES.chest.push_ups,
     ]
   },
-  
+
   "abs": {
     "title": "Abs",
     "index": 0,
