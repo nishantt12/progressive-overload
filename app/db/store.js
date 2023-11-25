@@ -27,6 +27,29 @@ export async function updateWorkout(set, index, listIndex) {
 
 }
 
+export async function addWorkout(workoutKey, exerciseKey, set) {
+  const DATA = await loadWorkout();
+
+  let workoutData = DATA[workoutKey];
+
+  console.log(JSON.stringify(workoutData));
+  let exerciseData = EXERCIESES[exerciseKey.item][exerciseKey.innerItem];
+  console.log(exerciseData);
+
+  exerciseData.set = set;
+  console.log(exerciseData);
+  workoutData.workouts.push(exerciseData);
+  DATA[workoutKey] = workoutData;
+  console.log(DATA);
+  try {
+    await AsyncStorage.setItem('workout', JSON.stringify(DATA));
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
+
+}
+
 export async function updateCurrentWorkout(currentWorkout) {
 
   try {
@@ -76,7 +99,6 @@ export async function getExceriseMap() {
 
   let test = makeItems[0].key.item
   let test2 = makeItems[0].key.innerItem
-  console.log(EXERCIESES[test][test2]);
   return makeItems;
 }
 

@@ -9,7 +9,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3, getExceriseMap } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3, getExceriseMap, addWorkout } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -116,7 +116,8 @@ class SET extends React.Component {
 
 export default function AddWorkout() {
 
-    const [myArray, setMyArray] = useState([])
+    const [workout, setWorkout] = useState([])
+    const [exercise, setExercise] = useState([])
     const [totalWorkout, setTotalWorkout] = useState([])
     const [totalExercise, setTotalExercise] = useState([])
 
@@ -128,6 +129,8 @@ export default function AddWorkout() {
         const getData = async () => {
             const TOTAL_WORKOUT = await getWorkoutMap();
             const TOTAL_EXERCISE = await getExceriseMap();
+            console.log(TOTAL_WORKOUT);
+            console.log(TOTAL_EXERCISE);
             setTotalWorkout(TOTAL_WORKOUT);
             setTotalExercise(TOTAL_EXERCISE);
         }
@@ -136,15 +139,9 @@ export default function AddWorkout() {
 
     }, [])
 
-    const updateCurrentWorkoutLocal = async (currentWorkout) => {
-        updateCurrentWorkout(currentWorkout);
-        const DATA = await loadData()
-
-        setMyArray(DATA);
-    }
-
     const onSavePressed = () => {
-        console.log("onSavePressed")
+        console.log("onSavePressed tet")
+        addWorkout(workout, exercise, SET_3)
     }
 
 
@@ -174,8 +171,8 @@ export default function AddWorkout() {
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={item => {
-                    console.log(item.key)
-
+                    console.log(item.key);
+                    setWorkout(item.key);
                 }}
             />
 
@@ -191,7 +188,7 @@ export default function AddWorkout() {
                 value={value}
                 onChange={item => {
                     console.log(item.key)
-
+                    setExercise(item.key);
                 }}
             />
 
