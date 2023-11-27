@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, FlatList, Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, FlatList, Dimensions, View, Text, Button, Alert, TouchableOpacity, StatusBar } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -114,7 +114,7 @@ class SET extends React.Component {
 
 }
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
 
     const [myArray, setMyArray] = useState([])
     const [totalWorkout, setTotalWorkout] = useState([])
@@ -145,17 +145,37 @@ export default function Home({navigation}) {
         setMyArray(DATA);
     }
 
+    const showAlert = async (item, index ) =>  {
+        console.log(index);
+        console.log(item);
+        Alert.alert(
+          'Are you sure?',
+          'Do you want to remove this workout?',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                console.log("Delete");
+              },
+            },
+          ],
+        );
+      };
+
     const renderItem = ({ item, index }) => {
         return (
-            <View style={styles.item}>
-                <Text style={styles.title}>
-                    {item.title} : {index + 1}
-                </Text>
-                {/* <Text style={styles.set_title}>
+            <TouchableOpacity
+                onLongPress={() => showAlert(item, index)}>
+                <View style={styles.item}>
+                    <Text style={styles.title}>
+                        {item.title} : {index + 1}
+                    </Text>
+                    {/* <Text style={styles.set_title}>
                         Sets
                     </Text> */}
-                {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
-            </View>
+                    {item.set.map((set, setIndex) => <SET set={set} index={setIndex} listIndex={index} />)}
+                </View>
+            </TouchableOpacity>
         )
     }
 
@@ -229,7 +249,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'flex-end',
-      },
+    },
     item: {
         padding: 10,
         marginVertical: 8,
