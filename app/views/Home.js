@@ -9,7 +9,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, deleteExercise } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -155,7 +155,7 @@ export default function Home({ navigation }) {
             {
               text: 'OK',
               onPress: () => {
-                console.log("Delete");
+                deleteExercise(item, index);
               },
             },
           ],

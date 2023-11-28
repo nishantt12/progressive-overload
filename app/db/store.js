@@ -95,11 +95,32 @@ export async function getExceriseMap() {
       }
       makeItems.push(makeItem)
     })
-  })
+  });
 
-  let test = makeItems[0].key.item
-  let test2 = makeItems[0].key.innerItem
   return makeItems;
+}
+
+export async function deleteExercise(item, index) {
+  var currentWorkout = await AsyncStorage.getItem('currentWorkout')
+  if (currentWorkout == null)
+    currentWorkout = DEFAULT_WORKOUT;
+
+  const DATA = await loadWorkout();
+
+  let newData = DATA;
+  let isActive = newData[currentWorkout].workouts[index].isActive;
+  newData[currentWorkout].workouts[index].isActive = !isActive;
+
+  console.log("deleteExercise");
+
+  console.log(JSON.stringify(newData));
+
+  try {
+    await AsyncStorage.setItem('workout', JSON.stringify(newData));
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
 }
 
 
@@ -115,8 +136,7 @@ export async function loadWorkout() {
       value[DEFAULT_WORKOUT] = WORKOUT_PLAN_NEW[DEFAULT_WORKOUT]
     }
     return value;
-  }
-  else {
+  } else {
     console.log("Values is null")
     console.log(JSON.stringify(WORKOUT_PLAN_NEW))
     return WORKOUT_PLAN_NEW;
@@ -129,7 +149,9 @@ export async function loadData(key) {
   if (currentWorkout == null)
     currentWorkout = DEFAULT_WORKOUT;
   const value = await loadWorkout();
-  return value[currentWorkout].workouts;
+  const result = value[currentWorkout].workouts.filter((workout) => workout.isActive == true);
+
+  return result;
 }
 
 const SET_4 = [
