@@ -23,6 +23,9 @@ export async function updateWorkout(set, index, listIndex) {
   } catch (e) {
     // saving error
     console.log(e);
+
+
+    
   }
 
 }
