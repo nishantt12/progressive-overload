@@ -1,3 +1,7 @@
+// 1. Add workout use updated set value
+// 2. Refresh screen after delete and add
+
+
 import React from 'react';
 
 import { StyleSheet, FlatList, Dimensions, View, Text, Button, Alert, TouchableOpacity, StatusBar } from 'react-native';
@@ -159,6 +163,9 @@ export default function Home({ navigation }) {
               },
             },
           ],
+          {
+            cancelable: true,
+          }
         );
       };
 

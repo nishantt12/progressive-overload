@@ -24,8 +24,6 @@ export async function updateWorkout(set, index, listIndex) {
     // saving error
     console.log(e);
 
-
-    
   }
 
 }
@@ -41,6 +39,22 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
 
   exerciseData.set = set;
   console.log(exerciseData);
+
+  const existingTitles = workoutData.workouts.map((workout) => workout.title);
+
+  // if (existingTitles.include(exerciseData.title)) {
+    let indexToDelete = -1;
+    workoutData.workouts.forEach((item, index) => {
+      if(item.title == exerciseData.title){
+        indexToDelete = index; 
+      }
+    })
+
+    if(indexToDelete>=0) {
+      workoutData.workouts.slice(indexToDelete);
+    }
+  // }
+
   workoutData.workouts.push(exerciseData);
   DATA[workoutKey] = workoutData;
   console.log(DATA);
@@ -111,8 +125,17 @@ export async function deleteExercise(item, index) {
   const DATA = await loadWorkout();
 
   let newData = DATA;
-  let isActive = newData[currentWorkout].workouts[index].isActive;
-  newData[currentWorkout].workouts[index].isActive = !isActive;
+  let indexToDelete = -1;
+  newData[currentWorkout].workouts.forEach((workoutItem, index) => {
+    if(workoutItem.title == item.title){
+      indexToDelete = index; 
+    }
+  })
+
+  let isActive = newData[currentWorkout].workouts[indexToDelete].isActive;
+
+
+  newData[currentWorkout].workouts[indexToDelete].isActive = !isActive;
 
   console.log("deleteExercise");
 

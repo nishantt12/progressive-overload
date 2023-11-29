@@ -100,15 +100,9 @@ class SET extends React.Component {
                     </TouchableOpacity>
                     <Text style={{ color: 'white', justifyContent: 'center', alignContent: 'center' }}> Reps</Text>
                 </View>
-
             </View>
-
-
-
         </View>
         )
-
-
     }
 
 
@@ -122,7 +116,6 @@ export default function AddWorkout() {
     const [totalExercise, setTotalExercise] = useState([])
 
     const [value, setValue] = useState(null);
-
 
     useEffect(() => {
 
