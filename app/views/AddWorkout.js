@@ -21,11 +21,16 @@ class SET extends React.Component {
         set: {}
     }
 
+
+    updateData(set, index) {
+        this.props.updateState(set, index);
+    }
+
     plusWight = (set, index, listIndex) => {
         let newSet = set
         newSet.weight += 2.5;
         updateWorkout(newSet, index, listIndex)
-
+        this.updateData(newSet, index);
         this.setState({ set: set });
     }
 
@@ -36,7 +41,7 @@ class SET extends React.Component {
         else
             newSet.weight = 0
         updateWorkout(newSet, index, listIndex)
-
+        this.updateData(newSet, index);
         this.setState({ set: set });
     }
 
@@ -44,7 +49,7 @@ class SET extends React.Component {
         let newSet = set
         newSet.reps += 1;
         updateWorkout(newSet, index, listIndex)
-
+        this.updateData(newSet, index);
         this.setState({ set: set });
     }
 
@@ -54,7 +59,7 @@ class SET extends React.Component {
             newSet.reps -= 1;
         }
 
-
+        this.updateData(newSet, index);
         updateWorkout(newSet, index, listIndex)
 
         this.setState({ set: set });
@@ -116,6 +121,7 @@ export default function AddWorkout() {
     const [totalExercise, setTotalExercise] = useState([])
 
     const [value, setValue] = useState(null);
+    const [listOfSets, setListOfSets] = useState(null);
 
     useEffect(() => {
 
@@ -126,6 +132,10 @@ export default function AddWorkout() {
             console.log(TOTAL_EXERCISE);
             setTotalWorkout(TOTAL_WORKOUT);
             setTotalExercise(TOTAL_EXERCISE);
+            if (!listOfSets) {
+                
+                setListOfSets(SET_3);
+            }
         }
 
         getData()
@@ -133,17 +143,23 @@ export default function AddWorkout() {
     }, [])
 
     const onSavePressed = () => {
-        console.log("onSavePressed tet")
-        addWorkout(workout, exercise, SET_3)
+        console.log(listOfSets);
+        addWorkout(workout, exercise, listOfSets)
     }
 
+    const updateState = (set, index) => {
+        console.log(set);
+        let newListOfSets = listOfSets;
+        newListOfSets[index] = set;
+        setListOfSets(newListOfSets);
+    }
 
     const renderItem = () => {
         return (
             <View style={styles.item}>
-                {SET_3.map((set, setIndex) => 
+                {SET_3.map((set, setIndex) =>
 
-                <SET set={set} index={setIndex} listIndex={0} />)
+                    <SET set={set} index={setIndex} listIndex={0} updateState={updateState} />)
                 }
             </View>
         )

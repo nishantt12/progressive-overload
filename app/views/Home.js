@@ -1,5 +1,7 @@
 // 1. Add workout use updated set value
 // 2. Refresh screen after delete and add
+// 3. Set initial workout and exercies in Add Workout
+// 4. Set current workout in home
 
 
 import React from 'react';
