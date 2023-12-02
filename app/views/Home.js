@@ -1,4 +1,3 @@
-// 1. Add workout use updated set value
 // 2. Refresh screen after delete and add
 // 3. Set initial workout and exercies in Add Workout
 // 4. Set current workout in home
@@ -140,9 +139,12 @@ export default function Home({ navigation }) {
             setTotalWorkout(TOTAL_WORKOUT);
         }
 
-        getData()
+        const unsubscribe = navigation.addListener('focus', () => {
+            getData();
+        });
+        return unsubscribe;
 
-    }, [])
+    }, [navigation])
 
     const updateCurrentWorkoutLocal = async (currentWorkout) => {
         updateCurrentWorkout(currentWorkout);
@@ -151,25 +153,25 @@ export default function Home({ navigation }) {
         setMyArray(DATA);
     }
 
-    const showAlert = async (item, index ) =>  {
+    const showAlert = async (item, index) => {
         console.log(index);
         console.log(item);
         Alert.alert(
-          'Are you sure?',
-          'Do you want to remove this workout?',
-          [
+            'Are you sure?',
+            'Do you want to remove this workout?',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        deleteExercise(item, index);
+                    },
+                },
+            ],
             {
-              text: 'OK',
-              onPress: () => {
-                deleteExercise(item, index);
-              },
-            },
-          ],
-          {
-            cancelable: true,
-          }
+                cancelable: true,
+            }
         );
-      };
+    };
 
     const renderItem = ({ item, index }) => {
         return (
