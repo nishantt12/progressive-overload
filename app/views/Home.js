@@ -1,4 +1,3 @@
-// 2. Refresh screen after delete and add
 // 3. Set initial workout and exercies in Add Workout
 // 4. Set current workout in home
 
@@ -14,7 +13,8 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, deleteExercise } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, getCurrentWorkout, 
+    updateCurrentWorkout, deleteExercise } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -126,19 +126,18 @@ export default function Home({ navigation }) {
 
     const [value, setValue] = useState(null);
 
+    const getData = async () => {
+        console.log("useEffect")
+        const DATA = await loadData()
+        const TOTAL_WORKOUT = await getWorkoutMap();
+        const currentWorkout = await getCurrentWorkout();
+        setMyArray(DATA);
+        setTotalWorkout(TOTAL_WORKOUT);
+        setValue(currentWorkout);
+        console.log("data loaded");
+    }
 
     useEffect(() => {
-
-        const getData = async () => {
-            console.log("useEffect")
-            const DATA = await loadData()
-            const TOTAL_WORKOUT = await getWorkoutMap();
-            console.log("DATA");
-            console.log(JSON.stringify(DATA));
-            setMyArray(DATA);
-            setTotalWorkout(TOTAL_WORKOUT);
-        }
-
         const unsubscribe = navigation.addListener('focus', () => {
             getData();
         });
@@ -162,8 +161,11 @@ export default function Home({ navigation }) {
             [
                 {
                     text: 'OK',
-                    onPress: () => {
+                    onPress: async () => {
                         deleteExercise(item, index);
+                        const DATA = await loadData()
+                        console.log("setting array");
+                        setMyArray(DATA);
                     },
                 },
             ],

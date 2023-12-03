@@ -43,16 +43,16 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
   const existingTitles = workoutData.workouts.map((workout) => workout.title);
 
   // if (existingTitles.include(exerciseData.title)) {
-    let indexToDelete = -1;
-    workoutData.workouts.forEach((item, index) => {
-      if(item.title == exerciseData.title){
-        indexToDelete = index; 
-      }
-    })
-
-    if(indexToDelete>=0) {
-      workoutData.workouts.slice(indexToDelete);
+  let indexToDelete = -1;
+  workoutData.workouts.forEach((item, index) => {
+    if (item.title == exerciseData.title) {
+      indexToDelete = index;
     }
+  })
+
+  if (indexToDelete >= 0) {
+    workoutData.workouts.slice(indexToDelete);
+  }
   // }
 
   workoutData.workouts.push(exerciseData);
@@ -75,6 +75,17 @@ export async function updateCurrentWorkout(currentWorkout) {
     // saving error
     console.log(e);
   }
+
+}
+
+
+export async function getCurrentWorkout() {
+
+  var currentWorkout = await AsyncStorage.getItem('currentWorkout')
+  if (currentWorkout == null)
+    currentWorkout = DEFAULT_WORKOUT;
+
+  return currentWorkout;
 
 }
 
@@ -127,8 +138,8 @@ export async function deleteExercise(item, index) {
   let newData = DATA;
   let indexToDelete = -1;
   newData[currentWorkout].workouts.forEach((workoutItem, index) => {
-    if(workoutItem.title == item.title){
-      indexToDelete = index; 
+    if (workoutItem.title == item.title) {
+      indexToDelete = index;
     }
   })
 
