@@ -1,5 +1,5 @@
 // 3. Set initial workout and exercies in Add Workout
-// 4. Set current workout in home
+// 4. Refresh screen after delete
 
 
 import React from 'react';

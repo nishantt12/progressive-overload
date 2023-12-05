@@ -128,10 +128,10 @@ export default function AddWorkout() {
         const getData = async () => {
             const TOTAL_WORKOUT = await getWorkoutMap();
             const TOTAL_EXERCISE = await getExceriseMap();
-            console.log(TOTAL_WORKOUT);
-            console.log(TOTAL_EXERCISE);
+            const currentWorkout = await getCurrentWorkout();
             setTotalWorkout(TOTAL_WORKOUT);
             setTotalExercise(TOTAL_EXERCISE);
+            setValue(currentWorkout);
             if (!listOfSets) {
                 
                 setListOfSets(SET_3);
