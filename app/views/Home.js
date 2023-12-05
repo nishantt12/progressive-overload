@@ -1,4 +1,3 @@
-// 3. Set initial workout and exercies in Add Workout
 // 4. Refresh screen after delete
 
 
@@ -135,6 +134,7 @@ export default function Home({ navigation }) {
         setTotalWorkout(TOTAL_WORKOUT);
         setValue(currentWorkout);
         console.log("data loaded");
+        console.log("m array length"+myArray.length);
     }
 
     useEffect(() => {
@@ -150,6 +150,7 @@ export default function Home({ navigation }) {
         const DATA = await loadData()
 
         setMyArray(DATA);
+        console.log("m array length"+myArray.length);
     }
 
     const showAlert = async (item, index) => {
@@ -162,10 +163,11 @@ export default function Home({ navigation }) {
                 {
                     text: 'OK',
                     onPress: async () => {
-                        deleteExercise(item, index);
+                        await deleteExercise(item, index);
                         const DATA = await loadData()
                         console.log("setting array");
                         setMyArray(DATA);
+                        console.log("m array length"+myArray.length);
                     },
                 },
             ],
