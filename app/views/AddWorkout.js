@@ -9,7 +9,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
 
 
-import { loadData, loadWorkout, updateWorkout, getWorkoutMap, updateCurrentWorkout, SET_3, getExceriseMap, addWorkout } from '../db/store'
+import { loadData, loadWorkout, updateWorkout, getWorkoutMap, getCurrentWorkout, SET_3, getExceriseMap, addWorkout } from '../db/store'
 
 const { useState, useEffect } = React;
 var DATA = []
@@ -132,6 +132,7 @@ export default function AddWorkout() {
             setTotalWorkout(TOTAL_WORKOUT);
             setTotalExercise(TOTAL_EXERCISE);
             setValue(currentWorkout);
+            setWorkout(currentWorkout);
             if (!listOfSets) {
                 
                 setListOfSets(SET_3);

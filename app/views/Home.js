@@ -1,4 +1,4 @@
-// 4. Refresh screen after delete
+// 1. Show only available exercise in AddWorkout
 
 
 import React from 'react';

@@ -32,7 +32,7 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
   const DATA = await loadWorkout();
 
   let workoutData = DATA[workoutKey];
-
+  console.log("workoutData: "+workoutKey);
   console.log(JSON.stringify(workoutData));
   let exerciseData = EXERCIESES[exerciseKey.item][exerciseKey.innerItem];
   console.log(exerciseData);
@@ -40,21 +40,17 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
   exerciseData.set = set;
   console.log(exerciseData);
 
-  const existingTitles = workoutData.workouts.map((workout) => workout.title);
-
-  // if (existingTitles.include(exerciseData.title)) {
   let indexToDelete = -1;
   workoutData.workouts.forEach((item, index) => {
+    console.log(item+"  "+index);
     if (item.title == exerciseData.title) {
+      item.set = exerciseData.set;
       indexToDelete = index;
     }
   })
-
   if (indexToDelete >= 0) {
-    workoutData.workouts.slice(indexToDelete);
+    workoutData.workouts.splice(indexToDelete, 1);
   }
-  // }
-
   workoutData.workouts.push(exerciseData);
   DATA[workoutKey] = workoutData;
   console.log(DATA);
