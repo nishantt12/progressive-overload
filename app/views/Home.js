@@ -1,4 +1,13 @@
 // 1. Show only available exercise in AddWorkout
+// 1.1 Remove exercise number from home
+// 2. Add navigation drawer and profile
+// 3. Add timer and start and stop
+// 4. Improve the UI.
+// 5. Add a screen where we start and stop the workout.
+// 6. Store Workout based on Android device id to dummy server.
+// 7. Imporve code base.
+// 8. Upload app to play store.
+// 9. Use redux.
 
 
 import React from 'react';
