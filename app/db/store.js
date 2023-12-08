@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const DEFAULT_WORKOUT = "biceps-triceps";
 
 export async function updateWorkout(set, index, listIndex) {
-  return
   var currentWorkout = await AsyncStorage.getItem('currentWorkout')
   if (currentWorkout == null)
     currentWorkout = DEFAULT_WORKOUT;
@@ -32,13 +31,9 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
   const DATA = await loadWorkout();
 
   let workoutData = DATA[workoutKey];
-  console.log("workoutData: "+workoutKey);
-  console.log(JSON.stringify(workoutData));
   let exerciseData = EXERCIESES[exerciseKey.item][exerciseKey.innerItem];
-  console.log(exerciseData);
 
   exerciseData.set = set;
-  console.log(exerciseData);
 
   let indexToDelete = -1;
   workoutData.workouts.forEach((item, index) => {
@@ -53,7 +48,6 @@ export async function addWorkout(workoutKey, exerciseKey, set) {
   }
   workoutData.workouts.push(exerciseData);
   DATA[workoutKey] = workoutData;
-  console.log(DATA);
   try {
     await AsyncStorage.setItem('workout', JSON.stringify(DATA));
   } catch (e) {

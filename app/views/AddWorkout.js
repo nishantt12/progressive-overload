@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, FlatList, Dimensions, View, Text, Button, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, FlatList, Dimensions, View, Text, Button, Alert, TouchableOpacity, StatusBar } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -113,10 +113,10 @@ class SET extends React.Component {
 
 }
 
-export default function AddWorkout() {
+export default function AddWorkout({ navigation }) {
 
-    const [workout, setWorkout] = useState([])
-    const [exercise, setExercise] = useState([])
+    const [workout, setWorkout] = useState(null)
+    const [exercise, setExercise] = useState(null)
     const [totalWorkout, setTotalWorkout] = useState([])
     const [totalExercise, setTotalExercise] = useState([])
 
@@ -143,9 +143,42 @@ export default function AddWorkout() {
 
     }, [])
 
-    const onSavePressed = () => {
-        console.log(listOfSets);
-        addWorkout(workout, exercise, listOfSets)
+    const onSavePressed = async() => {
+        if(!workout) {
+            Alert.alert(
+                'Please select a workout!!!',
+                '',
+                [
+                    {
+                        text: 'OK'
+                    },
+                ],
+                {
+                    cancelable: true,
+                }
+            );
+            return
+        }
+
+        if(!exercise) {
+            Alert.alert(
+                'Please select a exercise!!!',
+                '',
+                [
+                    {
+                        text: 'OK'
+                    },
+                ],
+                {
+                    cancelable: true,
+                }
+            );
+            return
+
+        }
+
+        await addWorkout(workout, exercise, listOfSets);
+        navigation.goBack();
     }
 
     const updateState = (set, index) => {

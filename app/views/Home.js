@@ -154,8 +154,6 @@ export default function Home({ navigation }) {
     }
 
     const showAlert = async (item, index) => {
-        console.log(index);
-        console.log(item);
         Alert.alert(
             'Are you sure?',
             'Do you want to remove this workout?',
