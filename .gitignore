@@ -21,7 +21,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 ./yarn.lock
-yarn.lock
 
 # Android/IntelliJ
 #
@@ -61,3 +60,7 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+./yarn.lock
+yarn.lock
+package-lock.json
+./package-lock.json

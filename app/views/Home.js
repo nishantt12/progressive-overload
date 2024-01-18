@@ -1,3 +1,4 @@
+// 0. Bug: After adding new workout, 1st exercise in the home screen is setting to the same sets in the newly added exercise
 // 1. Show only available exercise in AddWorkout
 // 1.1 Remove exercise number from home
 // 2. Add navigation drawer and profile
